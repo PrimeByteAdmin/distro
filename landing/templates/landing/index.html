@@ -6,14 +6,14 @@
 <section class="relative min-h-screen flex items-center justify-center text-center pt-24 pb-12 overflow-hidden text-white bg-black">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Background" class="w-full h-full object-cover opacity-60">
+        <img src="{% static 'landing/img/hero_bg.jpg' %}" alt="Background" class="w-full h-full object-cover opacity-60">
         <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90"></div>
     </div>
 
     <div class="relative z-10 max-w-5xl px-4 sm:px-6 animate__animated animate__fadeInUp">
         <span class="inline-block py-1 px-3 rounded-full bg-primary/20 border border-primary/50 text-primary-light text-sm font-semibold mb-6 backdrop-blur-sm">Coming Soon to Owerri</span>
         <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 drop-shadow-2xl font-heading leading-tight tracking-tight">
-            The Food Delivery <br class="hidden md:block" /> <span class="text-primary">Revolution</span> is Here
+            The Distro Food <br class="hidden md:block" /> <span class="text-primary">Revolution</span> is Here
         </h1>
         <p class="text-lg sm:text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
             Connecting Buyers, Restaurants, and Riders across Imo State with speed, reliability, and passion.
@@ -47,11 +47,15 @@
 
         <!-- Notify Form -->
         <div class="max-w-xl mx-auto bg-white/10 backdrop-blur-md p-2 rounded-full border border-white/20 shadow-2xl">
-            <form hx-post="{% url 'subscribe' %}" hx-swap="outerHTML" class="flex flex-col sm:flex-row gap-2">
+            <form hx-post="{% url 'subscribe' %}" hx-swap="outerHTML" hx-indicator="#btn-spinner" class="flex flex-col sm:flex-row gap-2 relative">
                 {% csrf_token %}
                 <input type="email" name="email" placeholder="Enter your email address" required class="flex-grow px-6 py-3 rounded-full bg-transparent border-none text-white placeholder-gray-400 focus:outline-none focus:ring-0 text-lg w-full">
-                <button type="submit" class="bg-primary text-white px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-primary-dark transition-all duration-300 shadow-lg whitespace-nowrap w-full sm:w-auto">
-                    Notify Me
+                <button type="submit" class="cursor-pointer relative bg-primary text-white px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-primary-dark transition-all duration-300 shadow-lg whitespace-nowrap w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span class="inline-block">Notify Me</span>
+                    <svg id="btn-spinner" class="htmx-indicator absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
                 </button>
             </form>
         </div>
@@ -74,7 +78,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-text-dark mb-3">For Buyers</h3>
                 <p class="text-text-light leading-relaxed mb-6 flex-grow">Craving something specific? Order from your favorite local spots and get it delivered hot and fresh in minutes.</p>
-                <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Buyers" class="h-48 w-full object-cover rounded-2xl shadow-inner">
+                <img src="{% static 'landing/img/pounded_yam.jpg' %}" alt="Buyers - Delicious Food" class="h-48 w-full object-cover rounded-2xl shadow-inner">
             </div>
 
             <!-- Restaurants Card -->
@@ -84,7 +88,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-text-dark mb-3">For Restaurants</h3>
                 <p class="text-text-light leading-relaxed mb-6 flex-grow">Boost your sales and reach new customers with our dedicated partner dashboard and marketing tools.</p>
-                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Restaurants" class="h-48 w-full object-cover rounded-2xl shadow-inner">
+                <img src="{% static 'landing/img/restaurant.jpg' %}" alt="African Restaurant" class="h-48 w-full object-cover rounded-2xl shadow-inner">
             </div>
 
             <!-- Riders Card -->
@@ -94,7 +98,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-text-dark mb-3">For Riders</h3>
                 <p class="text-text-light leading-relaxed mb-6 flex-grow">Earn on your own terms. Flexible hours, competitive pay, and a supportive community for our riders.</p>
-                <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Riders" class="h-48 w-full object-cover rounded-2xl shadow-inner">
+                <img src="{% static 'landing/img/rider.jpg' %}" alt="Delivery Rider" class="h-48 w-full object-cover rounded-2xl shadow-inner">
             </div>
         </div>
     </div>
@@ -162,7 +166,7 @@
 <section class="py-24 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4 font-heading">Why FoodDistro?</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4 font-heading">Why Distro Food?</h2>
             <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
         </div>
         

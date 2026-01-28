@@ -50,13 +50,85 @@
 
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        /* Custom Distro Loader */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.4s ease-out;
+        }
+        .loader-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .pulse-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid #D32F2F;
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        .loader-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            animation: pulse-logo 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            50% { opacity: 0.2; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        @keyframes pulse-logo {
+            0% { transform: translate(-50%, -50%) scale(0.9); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(0.9); }
+        }
+        .loader-text {
+            margin-top: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #333;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .loader-text span {
+            color: #D32F2F;
+        }
+    </style>
 </head>
 <body x-data="{ mobileMenuOpen: false }" class="font-sans text-text-dark bg-white overflow-x-hidden">
+    <!-- Loader -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="pulse-ring"></div>
+            <img src="{% static 'landing/img/distro_logo.jpeg' %}" alt="Logo" class="loader-logo">
+            <div class="loader-text">Distro<span>Food</span></div>
+        </div>
+    </div>
+
     <header class="animate__animated animate__fadeInDown fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm shadow-md transition-all duration-300">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
             <div class="text-2xl font-extrabold text-text-dark tracking-tight font-heading flex items-center">
-                <img src="{% static 'landing/img/distro_logo.jpeg' %}" alt="FoodDistro Logo" class="h-10 mr-2 align-middle">
-                Food<span class="text-primary">Distro</span>
+                <img src="{% static 'landing/img/distro_logo.jpeg' %}" alt="DistroFood Logo" class="h-10 mr-2 align-middle">
+                Distro<span class="text-primary">Food</span>
             </div>
         </div>
     </header>
@@ -77,6 +149,19 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
+    <script>
+        // Hide loader when page loads
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }
+        });
+    </script>
+
     {% block scripts %}{% endblock %}
 </body>
 </html>
