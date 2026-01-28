@@ -60,7 +60,7 @@ services:
     restart: always
     ports:
       - "8080:80"
-      - "443:443"
+      - "8443:443"
     volumes:
       - ./compose/nginx:/etc/nginx/conf.d
       - static_volume:/usr/src/app/staticfiles
