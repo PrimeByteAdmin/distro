@@ -150,16 +150,22 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
-        // Hide loader when page loads
-        window.addEventListener('load', function() {
+        // Hide loader logic
+        function hideLoader() {
             const loader = document.getElementById('loader');
-            if (loader) {
+            if (loader && loader.style.display !== 'none') {
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
                 }, 500);
             }
-        });
+        }
+
+        // Hide when all assets (images, styles) are loaded
+        window.addEventListener('load', hideLoader);
+
+        // Fallback: Force hide after 2 seconds to prevent infinite loading
+        setTimeout(hideLoader, 2000);
     </script>
 
     {% block scripts %}{% endblock %}
