@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FoodDistro - Coming Soon{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#D32F2F',
+              'primary-dark': '#b71c1c',
+              secondary: '#f5f5f5',
+              'text-dark': '#333333',
+              'text-light': '#757575',
+            },
+            fontFamily: {
+              sans: ['Roboto', 'sans-serif'],
+              heading: ['Montserrat', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Custom CSS (Legacy) -->
+    <!-- <link rel="stylesheet" href="{% static 'landing/css/style.css' %}"> -->
+    
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body x-data="{ mobileMenuOpen: false }" class="font-sans text-text-dark bg-white overflow-x-hidden">
+    <header class="animate__animated animate__fadeInDown fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm shadow-md transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+            <div class="text-2xl font-extrabold text-text-dark tracking-tight font-heading flex items-center">
+                <img src="{% static 'landing/img/distro_logo.jpeg' %}" alt="FoodDistro Logo" class="h-10 mr-2 align-middle">
+                Food<span class="text-primary">Distro</span>
+            </div>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="bg-gray-900 text-white py-10 text-center">
+        <div class="container mx-auto px-4">
+            <p class="mb-4">&copy; 2026 FoodDistro. All rights reserved.</p>
+            <div class="flex justify-center gap-6">
+                <a href="#" class="text-white text-xl hover:text-primary transition-colors"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-white text-xl hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white text-xl hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

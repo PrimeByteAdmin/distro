@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.1
+    container_name: distro_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - distro_mysql_data:/var/lib/mysql
+    networks:
+      - distro_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    image: distro_django
+    container_name: distro_django
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - USE_SQLITE=False
+      - DB_ENGINE=django.db.backends.mysql
+      - DB_HOST=mysql
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=3306
+    volumes:
+      - .:/usr/src/app
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/media
+    command: >
+      bash -c "python manage.py migrate &&
+               python manage.py collectstatic --noinput &&
+               gunicorn food_distro.wsgi:application --bind 0.0.0.0:8000"
+    networks:
+      - distro_network
+
+  nginx:
+    image: nginx:latest
+    container_name: distro_nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./compose/nginx:/etc/nginx/conf.d
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/media
+      # Mount LetsEncrypt certificates
+      - /etc/letsencrypt/live/distro.ng:/etc/letsencrypt/live/distro.ng:ro
+      - /etc/letsencrypt/archive/distro.ng:/etc/letsencrypt/archive/distro.ng:ro
+    depends_on:
+      django:
+        condition: service_started
+    networks:
+      - distro_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: distro_phpmyadmin
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    networks:
+      - distro_network
+
+volumes:
+  distro_mysql_data:
+  static_volume:
+  media_volume:
+
+networks:
+  distro_network:
+    driver: bridge

@@ -1,0 +1,223 @@
+{% extends 'landing/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center text-center pt-24 pb-12 overflow-hidden text-white bg-black">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Background" class="w-full h-full object-cover opacity-60">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90"></div>
+    </div>
+
+    <div class="relative z-10 max-w-5xl px-4 sm:px-6 animate__animated animate__fadeInUp">
+        <span class="inline-block py-1 px-3 rounded-full bg-primary/20 border border-primary/50 text-primary-light text-sm font-semibold mb-6 backdrop-blur-sm">Coming Soon to Owerri</span>
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-6 drop-shadow-2xl font-heading leading-tight tracking-tight">
+            The Food Delivery <br class="hidden md:block" /> <span class="text-primary">Revolution</span> is Here
+        </h1>
+        <p class="text-lg sm:text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
+            Connecting Buyers, Restaurants, and Riders across Imo State with speed, reliability, and passion.
+        </p>
+        
+        <!-- Countdown -->
+        <div class="mb-12" x-data="countdown()">
+            <div class="flex justify-center gap-3 sm:gap-6 flex-wrap">
+                <!-- Days -->
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 min-w-[80px] sm:min-w-[100px] shadow-2xl">
+                    <span class="text-3xl sm:text-4xl font-bold block leading-none text-white" x-text="days">00</span>
+                    <span class="text-xs uppercase mt-2 block text-gray-400 font-medium tracking-wider">Days</span>
+                </div>
+                <!-- Hours -->
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 min-w-[80px] sm:min-w-[100px] shadow-2xl">
+                    <span class="text-3xl sm:text-4xl font-bold block leading-none text-white" x-text="hours">00</span>
+                    <span class="text-xs uppercase mt-2 block text-gray-400 font-medium tracking-wider">Hours</span>
+                </div>
+                <!-- Minutes -->
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 min-w-[80px] sm:min-w-[100px] shadow-2xl">
+                    <span class="text-3xl sm:text-4xl font-bold block leading-none text-white" x-text="minutes">00</span>
+                    <span class="text-xs uppercase mt-2 block text-gray-400 font-medium tracking-wider">Mins</span>
+                </div>
+                <!-- Seconds -->
+                <div class="bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 min-w-[80px] sm:min-w-[100px] shadow-2xl">
+                    <span class="text-3xl sm:text-4xl font-bold block leading-none text-primary" x-text="seconds">00</span>
+                    <span class="text-xs uppercase mt-2 block text-gray-400 font-medium tracking-wider">Secs</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notify Form -->
+        <div class="max-w-xl mx-auto bg-white/10 backdrop-blur-md p-2 rounded-full border border-white/20 shadow-2xl">
+            <form hx-post="{% url 'subscribe' %}" hx-swap="outerHTML" class="flex flex-col sm:flex-row gap-2">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Enter your email address" required class="flex-grow px-6 py-3 rounded-full bg-transparent border-none text-white placeholder-gray-400 focus:outline-none focus:ring-0 text-lg w-full">
+                <button type="submit" class="bg-primary text-white px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-primary-dark transition-all duration-300 shadow-lg whitespace-nowrap w-full sm:w-auto">
+                    Notify Me
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Value Proposition Section -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold text-text-dark mb-4 font-heading">Empowering Owerri</h2>
+            <p class="text-text-light text-xl max-w-2xl mx-auto">A complete ecosystem designed to uplift local businesses and simplify life.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <!-- Buyers Card -->
+            <div class="bg-secondary rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 group flex flex-col">
+                <div class="h-16 w-16 bg-white rounded-2xl flex items-center justify-center text-primary text-2xl shadow-sm mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="fas fa-shopping-basket"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-text-dark mb-3">For Buyers</h3>
+                <p class="text-text-light leading-relaxed mb-6 flex-grow">Craving something specific? Order from your favorite local spots and get it delivered hot and fresh in minutes.</p>
+                <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Buyers" class="h-48 w-full object-cover rounded-2xl shadow-inner">
+            </div>
+
+            <!-- Restaurants Card -->
+            <div class="bg-secondary rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 group flex flex-col">
+                <div class="h-16 w-16 bg-white rounded-2xl flex items-center justify-center text-primary text-2xl shadow-sm mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="fas fa-store"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-text-dark mb-3">For Restaurants</h3>
+                <p class="text-text-light leading-relaxed mb-6 flex-grow">Boost your sales and reach new customers with our dedicated partner dashboard and marketing tools.</p>
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Restaurants" class="h-48 w-full object-cover rounded-2xl shadow-inner">
+            </div>
+
+            <!-- Riders Card -->
+            <div class="bg-secondary rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 group flex flex-col">
+                <div class="h-16 w-16 bg-white rounded-2xl flex items-center justify-center text-primary text-2xl shadow-sm mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="fas fa-motorcycle"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-text-dark mb-3">For Riders</h3>
+                <p class="text-text-light leading-relaxed mb-6 flex-grow">Earn on your own terms. Flexible hours, competitive pay, and a supportive community for our riders.</p>
+                <img src="https://images.unsplash.com/photo-1628198967839-43c3f9157140?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Riders" class="h-48 w-full object-cover rounded-2xl shadow-inner">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Marketing / Dashboard Section -->
+<section class="py-24 bg-gray-50 overflow-hidden">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-center gap-16">
+            <div class="flex-1 w-full order-2 lg:order-1">
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-primary/10 to-primary/5 rounded-3xl transform -rotate-2"></div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Dashboard" class="relative w-full rounded-2xl shadow-2xl">
+                </div>
+            </div>
+            <div class="flex-1 w-full order-1 lg:order-2">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm">Partner Success</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-text-dark mt-2 mb-6 font-heading leading-tight">Grow Your Business with Data</h2>
+                <p class="text-lg text-text-light mb-8 leading-relaxed">Our advanced dashboard gives you the insights you need to optimize operations and maximize profit.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-dark">Real-time Analytics</h4>
+                            <p class="text-sm text-text-light mt-1">Track sales as they happen.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-dark">Customer Insights</h4>
+                            <p class="text-sm text-text-light mt-1">Know your audience better.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-dark">Marketing Tools</h4>
+                            <p class="text-sm text-text-light mt-1">Run promos in seconds.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-text-dark">Mobile Ready</h4>
+                            <p class="text-sm text-text-light mt-1">Manage from anywhere.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Grid -->
+<section class="py-24 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4 font-heading">Why FoodDistro?</h2>
+            <div class="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-lg transition-shadow text-center">
+                <i class="fas fa-rocket text-4xl text-primary mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Super Fast</h3>
+                <p class="text-text-light text-sm">Optimized delivery routes for speed.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-lg transition-shadow text-center">
+                <i class="fas fa-lock text-4xl text-primary mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Secure</h3>
+                <p class="text-text-light text-sm">Safe and encrypted payments.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-lg transition-shadow text-center">
+                <i class="fas fa-headset text-4xl text-primary mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">24/7 Support</h3>
+                <p class="text-text-light text-sm">We are always here to help you.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-lg transition-shadow text-center">
+                <i class="fas fa-map-marked-alt text-4xl text-primary mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Local</h3>
+                <p class="text-text-light text-sm">Born and bred in Owerri.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('countdown', () => ({
+            days: '00',
+            hours: '00',
+            minutes: '00',
+            seconds: '00',
+            countDownDate: new Date().getTime() + (35 * 24 * 60 * 60 * 1000), 
+            
+            init() {
+                setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = this.countDownDate - now;
+                    
+                    if (distance < 0) {
+                        this.days = this.hours = this.minutes = this.seconds = '00';
+                    } else {
+                        this.days = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                        this.hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                        this.minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                        this.seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+                    }
+                }, 1000);
+            }
+        }))
+    });
+</script>
+{% endblock %}
