@@ -14,8 +14,8 @@ SECRET_KEY = 'django-insecure-e5i%dintpg+ib@%9+m+wo09j9gt1ss&3=$!581fd9@jd+gy0e@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['161.35.215.194', 'distro.ng', 'www.distro.ng', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://distro.ng', 'https://www.distro.ng']
+ALLOWED_HOSTS = ['161.35.215.194', 'distro.com.ng', 'www.distro.com.ng', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://distro.com.ng', 'https://www.distro.com.ng']
 
 
 # Application definition

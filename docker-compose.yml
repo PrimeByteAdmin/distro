@@ -66,8 +66,8 @@ services:
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/media
       # Mount LetsEncrypt certificates
-      - /etc/letsencrypt/live/distro.ng:/etc/letsencrypt/live/distro.ng:ro
-      - /etc/letsencrypt/archive/distro.ng:/etc/letsencrypt/archive/distro.ng:ro
+      - /etc/letsencrypt/live/distro.com.ng:/etc/letsencrypt/live/distro.com.ng:ro
+      - /etc/letsencrypt/archive/distro.com.ng:/etc/letsencrypt/archive/distro.com.ng:ro
     depends_on:
       django:
         condition: service_started
