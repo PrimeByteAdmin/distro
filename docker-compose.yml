@@ -3,7 +3,7 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.1
-    container_name: distro_mysql
+    container_name: Distro_mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -26,13 +26,13 @@ services:
       context: .
       dockerfile: ./compose/django/Dockerfile
     image: distro_django
-    container_name: distro_django
+    container_name: Distro_django
     restart: always
     depends_on:
       mysql:
         condition: service_healthy
     ports:
-      - "8000:8000"  # Django internal port
+      - "8000:8000"
     env_file:
       - .env
     environment:
@@ -56,34 +56,35 @@ services:
 
   nginx:
     image: nginx:latest
-    container_name: distro_nginx
+    container_name: Distro_nginx
     restart: always
     ports:
-      - "8080:80"   # Host free port 8080 → container 80
-      - "8443:443"  # Host free port 8443 → container 443
+      - "80:80"
+      - "443:443"
     volumes:
       - ./compose/nginx:/etc/nginx/conf.d
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/media
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
       - ./compose/certbot-www:/var/www/certbot
+      # Mount SSL certs exactly like your config
+      - /etc/letsencrypt/live/distro.com.ng/fullchain.pem:/etc/letsencrypt/live/distro.com.ng/fullchain.pem:ro
+      - /etc/letsencrypt/live/distro.com.ng/privkey.pem:/etc/letsencrypt/live/distro.com.ng/privkey.pem:ro
     depends_on:
-      - django
+      django:
+        condition: service_started
     networks:
       - distro_network
 
   certbot:
     image: certbot/certbot
-    container_name: distro_certbot
+    container_name: Distro_certbot
     restart: unless-stopped
     volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
+      - /etc/letsencrypt:/etc/letsencrypt
       - ./compose/certbot-www:/var/www/certbot
     entrypoint: >
       sh -c "trap exit TERM; while :; do
-             certbot renew --webroot -w /var/www/certbot --deploy-hook 'docker exec distro_nginx nginx -s reload';
+             certbot renew --webroot -w /var/www/certbot --deploy-hook 'docker exec Distro_nginx nginx -s reload';
              sleep 12h & wait $${!};
              done"
     networks:
@@ -91,12 +92,12 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: distro_phpmyadmin
+    container_name: Distro_phpmyadmin
     restart: always
     depends_on:
       - mysql
     ports:
-      - "8081:80"  # Host free port 8081 → container 80
+      - "8081:80"
     environment:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -107,8 +108,6 @@ volumes:
   distro_mysql_data:
   static_volume:
   media_volume:
-  certbot-etc:
-  certbot-var:
 
 networks:
   distro_network:
